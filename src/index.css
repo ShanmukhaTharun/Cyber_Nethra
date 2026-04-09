@@ -7,206 +7,88 @@ body, html, #root {
   width: 100%;
   min-height: 100vh;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #F8FAFC; /* Premium light background */
+  background-color: #F8FAFC;
   overflow-x: hidden;
   color: #1A202C;
 }
 
 * {
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* =========================================================
-   SCROLLBAR STYLING
+   SCROLLBAR (Aesthetic touch)
 ========================================================= */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
 ::-webkit-scrollbar-thumb {
   background: #CBD5E0;
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #A0AEC0;
-}
 
 /* =========================================================
-   MOBILE RESPONSIVE LAYOUT SYSTEM
+   MOBILE SIDEBAR TOGGLE LOGIC ONLY
 ========================================================= */
-/* Desktop Layout base */
-.dashboard-layout {
-  display: flex !important;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
-}
 
-.dashboard-sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1000;
-}
-
-.content-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-/* Hamburger hidden by default on desktop */
+/* Desktop Base */
 .hamburger-dashboard {
-  display: none;
+  display: none; /* Hide hamburger by default on desktop */
   background: transparent;
   border: none;
   font-size: 24px;
-  color: #2D3748;
   cursor: pointer;
-  padding: 5px;
-  margin-right: 15px;
-  border-radius: 6px;
-  transition: background 0.2s;
 }
 
-.hamburger-dashboard:hover {
-  background: #EDF2F7;
-}
-
-/* Mobile Overlay (Darkens background when sidebar opens on phone) */
-.mobile-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  z-index: 999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.mobile-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* =========================================================
-   MEDIA QUERIES (TABLETS & MOBILES)
-========================================================= */
-@media (max-width: 1024px) {
-  /* Smaller padding on medium screens */
-  main {
-    padding: 20px !important;
-  }
-}
-
+/* Mobile Overrides (Safe) */
 @media (max-width: 768px) {
+  
+  /* 1. Sidebar becomes a sliding drawer */
   .dashboard-sidebar {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     height: 100vh;
-    transform: translateX(-100%); /* Hidden completely */
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
-
-  /* When sidebar is forced open via state */
+  
   .dashboard-sidebar.open {
     transform: translateX(0);
-    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
   }
 
+  /* 2. Show the hamburger button in the navbar */
   .hamburger-dashboard {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    margin-right: 15px;
   }
 
-  /* Show the darkening overlay on mobile */
+  /* 3. Dark overlay when sidebar is open */
   .mobile-overlay {
     display: block;
-  }
-
-  /* Squish main content container to take full width */
-  .content-area {
-    width: 100vw;
-  }
-
-  /* Navbar Adjustments */
-  .dashboard-navbar {
-    padding: 0 15px !important;
-    height: 70px !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
   }
   
-  .greeting-text {
-    font-size: 16px !important;
+  .mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
   }
-  
+
+  /* 4. Hide breadcrumb to make room for profile and bell */
   .breadcrumb {
-    display: none !important; /* Hide breadcrumb to save space on mobile */
-  }
-  
-  .profile-info {
-    display: none !important; /* Hide names, just show avatar */
+    display: none !important;
   }
 
-  /* Main Container Padding Drop */
-  main {
-    padding: 15px !important;
-  }
-
-  /* Fix Form Grid Layouts */
-  .grid, .layout-grid {
-    grid-template-columns: 1fr !important; /* Force stacks */
-    gap: 15px !important;
-  }
-
-  /* Adjust Modal Overlays */
-  .modal-content {
-    width: 95% !important;
-    max-height: 95vh !important;
-    margin: 10px auto;
-  }
-}
-
-/* =========================================================
-   AESTHETIC UTILITIES
-========================================================= */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.hover-lift {
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
-}
-.hover-lift:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 51, 102, 0.1);
-}
-
-/* =========================================================
-   AUTH & FORMS RESPONSIVENESS
-========================================================= */
-@media (max-width: 480px) {
-  .auth-card {
-    padding: 25px 20px !important;
-    border-radius: 20px !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.4) !important;
-  }
-  .auth-container {
-    padding: 15px !important;
+  /* 5. Force generic flexible inline grids to stack into 1 column gracefully */
+  main [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
   }
 }
