@@ -11,7 +11,7 @@ exports.generateForensicReport = async (req, res) => {
     if (!complaint) return res.status(404).json({ error: 'Case not found' });
 
     const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyCv15kwKQdaRBwvrZoR09kcYIEJJWgDU_Y';
-    const MODEL = 'gemini-1.5-flash';
+    const MODEL = 'gemini-2.5-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
 
     const { expertNotes, overrideScore } = req.body;
@@ -98,7 +98,7 @@ exports.generateLegalFIR = async (req, res) => {
 
     // Using the specifically provided API Key
     const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyCv15kwKQdaRBwvrZoR09kcYIEJJWgDU_Y';
-    const MODEL = 'gemini-1.5-flash';
+    const MODEL = 'gemini-2.5-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
 
     // Compact prompt to minimize token usage
