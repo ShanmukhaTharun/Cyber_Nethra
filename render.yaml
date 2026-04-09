@@ -34,9 +34,8 @@ services:
   # ----------------------------------------------------
   # 3. React Frontend (Vite Static Site)
   # ----------------------------------------------------
-  - type: web
+  - type: static
     name: cyber-nethra-frontend
-    env: static
     rootDir: .
     buildCommand: "npm install && npm run build"
     staticPublishPath: "./dist"
