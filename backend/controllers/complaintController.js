@@ -163,7 +163,7 @@ exports.createComplaint = async (req, res) => {
         const formData = new FormData();
         formData.append('file', fs.createReadStream(evidencePath));
 
-        const AI_URL = process.env.AI_SERVER_URL || 'http://localhost:8000';
+        const AI_URL = process.env.AI_SERVER_URL || 'https://cyber-nethra-ai.onrender.com';
         // Call FastAPI Service
         const aiResponse = await axios.post(`${AI_URL}/detect`, formData, {
           headers: {
