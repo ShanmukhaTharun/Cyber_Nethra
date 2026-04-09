@@ -163,8 +163,9 @@ exports.createComplaint = async (req, res) => {
         const formData = new FormData();
         formData.append('file', fs.createReadStream(evidencePath));
 
+        const AI_URL = process.env.AI_SERVER_URL || 'http://localhost:8000';
         // Call FastAPI Service
-        const aiResponse = await axios.post('http://localhost:8000/detect', formData, {
+        const aiResponse = await axios.post(`${AI_URL}/detect`, formData, {
           headers: {
             ...formData.getHeaders()
           }

@@ -30,6 +30,11 @@ services:
         sync: false # User needs to paste their MongoDB connection string in Render Dashboard
       - key: JWT_SECRET
         generateValue: true
+      - key: AI_SERVER_URL
+        fromService:
+          type: web
+          name: cyber-nethra-ai
+          envVarKey: RENDER_EXTERNAL_URL
 
   # ----------------------------------------------------
   # 3. React Frontend (Vite Static Site)
