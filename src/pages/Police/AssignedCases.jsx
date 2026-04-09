@@ -91,7 +91,11 @@ const AssignedCases = () => {
     }, [cases, search, filterStatus, filterType, sortBy]);
 
     const SERVER_URL = import.meta.env.VITE_BACKEND_URL || '';
-    const getEvidenceUrl = (path) => path ? `${SERVER_URL}/${path.replace(/\\/g, '/')}` : null;
+    const getEvidenceUrl = (c) => {
+        if (!c || !c.evidence) return null;
+        if (c.evidence === 'mongodb') return `${SERVER_URL}/api/complaints/${c._id}/evidence`;
+        return `${SERVER_URL}/${c.evidence.replace(/\\/g, '/')}`;
+    };
 
     const allStatuses = ['All', 'Pending', 'AI-Flagged', 'Under Investigation', 'Evidence Analysis', 'Legal Review', 'Resolved', 'Deepfake Verified'];
     const allTypes = ['All', 'Deepfake', 'Fraud', 'Harassment', 'Hacking', 'IdentityTheft'];
@@ -230,7 +234,7 @@ const AssignedCases = () => {
                                         <div style={s.evidenceBlock}>
                                             <div style={s.detailLabel}>Submitted Evidence</div>
                                             <img
-                                                src={getEvidenceUrl(c.evidence)}
+                                                src={getEvidenceUrl(c)}
                                                 alt="Evidence"
                                                 style={s.evidenceImg}
                                                 onError={(e) => { e.target.style.display = 'none'; }}

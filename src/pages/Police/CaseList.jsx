@@ -29,10 +29,11 @@ const CaseList = () => {
         }
     };
 
-    const getEvidenceUrl = (path) => {
-        if (!path) return null;
+    const getEvidenceUrl = (c) => {
+        if (!c || !c.evidence) return null;
         const SERVER_URL = import.meta.env.VITE_BACKEND_URL || '';
-        return `${SERVER_URL}/${path.replace(/\\/g, '/')}`;
+        if (c.evidence === 'mongodb') return `${SERVER_URL}/api/complaints/${c._id}/evidence`;
+        return `${SERVER_URL}/${c.evidence.replace(/\\/g, '/')}`;
     };
 
     return (
@@ -76,7 +77,7 @@ const CaseList = () => {
                                 {/* Evidence thumbnail if available */}
                                 {c.evidence && (
                                     <img
-                                        src={getEvidenceUrl(c.evidence)}
+                                        src={getEvidenceUrl(c)}
                                         alt="Evidence"
                                         style={styles.thumbnail}
                                         onError={(e) => { e.target.style.display = 'none'; }}
@@ -139,7 +140,7 @@ const CaseList = () => {
                                 <div style={styles.evidenceSection}>
                                     <h4 style={styles.aiTitle}>🖼️ Evidence</h4>
                                     <img
-                                        src={getEvidenceUrl(selectedCase.evidence)}
+                                        src={getEvidenceUrl(selectedCase)}
                                         alt="Submitted Evidence"
                                         style={styles.evidenceImage}
                                         onError={(e) => {

@@ -52,7 +52,7 @@ const MediaAnalysis = () => {
             confidence: safeScore > 90 ? 'Very High' : safeScore > 70 ? 'High' : safeScore > 50 ? 'Medium' : 'Low',
             isAutomated: true,
             // Build the URL to the evidence image served from backend via Vite proxy
-            evidenceUrl: c.evidence ? `/${c.evidence.replace(/\\/g, '/').replace(/^\//, '')}` : null
+            evidenceUrl: c.evidence ? (c.evidence === 'mongodb' ? `/api/complaints/${c._id}/evidence` : `/${c.evidence.replace(/\\/g, '/').replace(/^\//, '')}`) : null
         });
         // In a real app we would setFile(c.evidenceUrl)
     };

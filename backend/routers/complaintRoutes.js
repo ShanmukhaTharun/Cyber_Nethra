@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const { createComplaint, getMyComplaints, getAllComplaints, updateComplaintStatus, generateForensicReport, generateLegalFIR, deleteComplaint } = require('../controllers/complaintController');
+const { createComplaint, getMyComplaints, getAllComplaints, updateComplaintStatus, generateForensicReport, generateLegalFIR, deleteComplaint, getEvidence } = require('../controllers/complaintController');
 
 // Multer Config
 const storage = multer.diskStorage({
@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/', upload.single('evidence'), createComplaint);
+router.get('/:id/evidence', getEvidence); // Serve image direct from DB
 router.get('/:email', getMyComplaints);
 router.get('/', getAllComplaints); // For Police/Experts
 router.put('/:id/status', updateComplaintStatus); // For Status Updates

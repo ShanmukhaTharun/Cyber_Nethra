@@ -2,6 +2,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
 const Complaint = require('../models/Complaint');
+const Evidence = require('../models/Evidence');
 const { sendNotification } = require('../utils/notificationUtils');
 
 // 📋 Generate AI Forensic Report using Gemini v1 REST API directly
@@ -186,7 +187,7 @@ exports.createComplaint = async (req, res) => {
       email,
       type,
       description,
-      evidence: evidencePath,
+      evidence: evidencePath ? 'mongodb' : null,
       // 🚀 Automated Pipeline: Flag immediately if AI is confident it's fake
       status: (aiResult === 'Fake' && confidenceScore > 0.7) ? 'AI-Flagged' : 'Pending',
       ai_analysis_result: aiResult,
@@ -194,6 +195,23 @@ exports.createComplaint = async (req, res) => {
     });
 
     await newComplaint.save();
+
+    // 💾 Save raw image file to MongoDB database permanently
+    if (evidencePath && fs.existsSync(evidencePath)) {
+      const newEvidence = new Evidence({
+        complaintId: newComplaint._id,
+        mimeType: req.file.mimetype,
+        data: fs.readFileSync(evidencePath)
+      });
+      await newEvidence.save();
+      
+      // Destroy the temporary ephemeral file so we don't leak space
+      try {
+        fs.unlinkSync(evidencePath);
+      } catch (err) {
+        console.error("Cleanup error:", err);
+      }
+    }
 
     // 📩 Notify User
     await sendNotification(req.io, {
@@ -285,7 +303,10 @@ exports.deleteComplaint = async (req, res) => {
     const complaint = await Complaint.findById(req.params.id);
     if (!complaint) return res.status(404).json({ error: "Complaint not found" });
 
-    // Remove evidence file if it exists
+    // Clean up MongoDB Evidence
+    await Evidence.findOneAndDelete({ complaintId: complaint._id });
+
+    // Remove legacy evidence file if it exists
     if (complaint.evidence && fs.existsSync(complaint.evidence)) {
       try {
         fs.unlinkSync(complaint.evidence);
@@ -300,5 +321,18 @@ exports.deleteComplaint = async (req, res) => {
   } catch (err) {
     console.error("Error deleting complaint:", err);
     res.status(500).json({ error: "Deletion failed" });
+  }
+};
+
+// 📦 Retrieve permanent MongoDB Image Evidence buffer
+exports.getEvidence = async (req, res) => {
+  try {
+    const ev = await Evidence.findOne({ complaintId: req.params.id });
+    if (!ev) return res.status(404).send('Image explicitly deleted or missing');
+    res.set('Content-Type', ev.mimeType);
+    res.send(ev.data);
+  } catch(err) {
+    console.error("Fetch Ev Error:", err.message);
+    res.status(500).send('Network failure retrieving secure image');
   }
 };
