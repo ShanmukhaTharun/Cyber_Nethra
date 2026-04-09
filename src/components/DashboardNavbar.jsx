@@ -17,19 +17,20 @@ const DashboardNavbar = ({ userName, userRole, onProfileClick, onMenuClick }) =>
 
   return (
     <nav className="dashboard-navbar" style={styles.nav}>
-      {/* Left Side: Breadcrumb & Greeting */}
-      <div style={styles.leftSection}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <button className="hamburger-dashboard" onClick={onMenuClick}>☰</button>
+      {/* Left Side: Hamburger, Breadcrumb & Greeting */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <button className="hamburger-dashboard" onClick={onMenuClick}>☰</button>
+        
+        <div style={styles.leftTextStack}>
           <div className="breadcrumb" style={styles.breadcrumb}>
-          <span style={styles.icon}>🛡️</span>
-          <span style={styles.muted}>Cyber Nethra</span>
-          <span style={styles.separator}>/</span>
-          <strong style={styles.activePath}>Secure Portal</strong>
-        </div>
-        </div>
-        <div className="greeting-text" style={styles.greetingText}>
-          {greeting}, <span style={{ color: '#2B6CB0' }}>{firstName}</span> 👋
+            <span style={styles.icon}>🛡️</span>
+            <span style={styles.muted}>Cyber Nethra</span>
+            <span style={styles.separator}>/</span>
+            <strong style={styles.activePath}>Secure Portal</strong>
+          </div>
+          <div className="greeting-text" style={styles.greetingText}>
+            {greeting}, <span style={{ color: '#2B6CB0' }}>{firstName}</span> 👋
+          </div>
         </div>
       </div>
 
@@ -79,7 +80,7 @@ const styles = {
     zIndex: 100,
   },
 
-  leftSection: {
+  leftTextStack: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
