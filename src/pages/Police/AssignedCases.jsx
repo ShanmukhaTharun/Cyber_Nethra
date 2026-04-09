@@ -10,10 +10,15 @@ const STATUS_COLORS = {
     'Deepfake Verified': { bg: '#EBF8FF', text: '#2B6CB0', border: '#63B3ED' },
 };
 
-const TYPE_ICON = {
-    'Deepfake': '🎭', 'Fraud': '💳', 'Harassment': '📢',
-    'Hacking': '💻', 'IdentityTheft': '🪪'
-};
+const FileIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+    </svg>
+);
 
 const AssignedCases = () => {
     const [cases, setCases] = useState([]);
@@ -174,7 +179,6 @@ const AssignedCases = () => {
                     const isOpen = expandedId === c._id;
                     const ref = getRef(c);
                     const colors = STATUS_COLORS[c.status] || STATUS_COLORS['Pending'];
-                    const icon = TYPE_ICON[c.type] || '📋';
                     const date = new Date(c.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
                     return (
@@ -185,7 +189,7 @@ const AssignedCases = () => {
                                 onClick={() => setExpandedId(isOpen ? null : c._id)}
                             >
                                 <div style={s.leftGroup}>
-                                    <span style={s.typeIcon}>{icon}</span>
+                                    <div style={s.typeIcon}><FileIcon /></div>
                                     <div>
                                         <div style={s.refId}>{ref}</div>
                                         <div style={s.typeName}>{c.type}</div>
