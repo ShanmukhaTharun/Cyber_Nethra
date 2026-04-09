@@ -5,7 +5,7 @@ services:
   - type: web
     name: cyber-nethra-ai
     plan: free
-    env: python
+    runtime: python
     rootDir: ai_server
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python main.py"
@@ -19,7 +19,7 @@ services:
   - type: web
     name: cyber-nethra-backend
     plan: free
-    env: node
+    runtime: node
     rootDir: backend
     buildCommand: "npm install"
     startCommand: "npm start"
@@ -34,8 +34,9 @@ services:
   # ----------------------------------------------------
   # 3. React Frontend (Vite Static Site)
   # ----------------------------------------------------
-  - type: static
+  - type: web
     name: cyber-nethra-frontend
+    runtime: static
     rootDir: .
     buildCommand: "npm install && npm run build"
     staticPublishPath: "./dist"
