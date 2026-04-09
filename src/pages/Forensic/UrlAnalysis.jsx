@@ -50,7 +50,7 @@ const UrlAnalysis = () => {
                 <p style={{ color: '#627D98', margin: '5px 0 0', fontSize: '14px' }}>Real-time machine learning detection of malicious phishing links and deceptive domains.</p>
             </div>
 
-            <div style={styles.grid}>
+            <div className="responsive-stack" style={styles.grid}>
                 {/* Left Panel: Input */}
                 <div style={styles.panel}>
                     <h3 style={styles.sectionTitle}>Target URL</h3>

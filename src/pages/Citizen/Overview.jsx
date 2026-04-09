@@ -15,7 +15,7 @@ export default function Overview({ user }) {
   return (
     <div style={containerStyle}>
       {/* Header Section */}
-      <div style={headerCard}>
+      <div className="responsive-stack" style={headerCard}>
         <div>
           <h2 style={{ color: '#003366', margin: 0 }}>Welcome back, {user.fullName}</h2>
           <p style={{ color: '#627D98', margin: '5px 0 0' }}>Secure Citizen Portal • ID: {user._id || 'CIT-8829'}</p>
@@ -30,7 +30,7 @@ export default function Overview({ user }) {
       </div>
 
       {/* Panic Button Section */}
-      <div style={panicSection}>
+      <div className="responsive-stack" style={panicSection}>
         <div style={panicText}>
           <h3 style={{ marginTop: 0, color: '#821717' }}>🚨 Emergency Financial Freeze</h3>
           <p style={{ fontSize: '14px', color: '#610404' }}>
@@ -48,7 +48,7 @@ export default function Overview({ user }) {
       </div>
 
       {/* Quick Stats or Shortcuts could go here */}
-      <div style={gridStyle}>
+      <div className="responsive-stack" style={gridStyle}>
         <div style={cardStyle}>
           <h3>📝 Report Incident</h3>
           <p>File a new cyber crime report immediately.</p>
@@ -85,7 +85,7 @@ const panicSection = {
   display: 'flex', justifyContent: 'space-between', alignItems: 'center'
 };
 
-const panicText = { maxWidth: '60%' };
+const panicText = { maxWidth: '100%' };
 
 const panicBtn = {
   background: '#E53E3E', color: 'white', border: 'none',
