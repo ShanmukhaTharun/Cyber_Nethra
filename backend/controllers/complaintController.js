@@ -12,7 +12,7 @@ exports.generateForensicReport = async (req, res) => {
 
     const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyCv15kwKQdaRBwvrZoR09kcYIEJJWgDU_Y';
     const MODEL = 'gemini-1.5-flash';
-    const url = `https://generativelanguage.googleapis.com/v1/models/${MODEL}:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
 
     const { expertNotes, overrideScore } = req.body;
     
@@ -99,7 +99,7 @@ exports.generateLegalFIR = async (req, res) => {
     // Using the specifically provided API Key
     const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyCv15kwKQdaRBwvrZoR09kcYIEJJWgDU_Y';
     const MODEL = 'gemini-1.5-flash';
-    const url = `https://generativelanguage.googleapis.com/v1/models/${MODEL}:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
 
     // Compact prompt to minimize token usage
     const promptText = `Draft a formal legal First Information Report (FIR) using ONLY plain text (no markdown format).
