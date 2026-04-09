@@ -178,10 +178,7 @@ exports.createComplaint = async (req, res) => {
         }
       } catch (aiError) {
         console.error("⚠️ AI Service Failed:", aiError.message);
-        // Robust Demonstration Fallback for Free Tier RAM crashes:
-        console.log("⚠️ Injecting Fallback AI metrics due to AI Server failure.");
-        aiResult = 'Fake';
-        confidenceScore = 0.965; // 96.5% confident deepfake
+        // We continue even if AI fails, just mark as Pending
       }
     }
 
