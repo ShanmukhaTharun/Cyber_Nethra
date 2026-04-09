@@ -51,7 +51,7 @@ const DashboardNavbar = ({ userName, userRole, onProfileClick, onMenuClick }) =>
           <div style={styles.avatar}>
             {firstName.charAt(0).toUpperCase()}
           </div>
-          <div style={styles.profileInfo}>
+          <div className="profile-info" style={styles.profileInfo}>
             <span style={styles.userName}>{userName || 'User'}</span>
             <span style={styles.userRole}>{userRole || 'Verified Citizen'}</span>
           </div>
@@ -205,6 +205,24 @@ if (typeof document !== 'undefined' && !document.getElementById('navbar-styles')
     .profile-btn-hover:hover {
       background: #F7FAFC !important;
       border: 1px solid #E2E8F0 !important;
+    }
+    @media (max-width: 768px) {
+      .dashboard-navbar {
+        padding: 0 15px !important;
+        height: 70px !important;
+      }
+      .breadcrumb {
+        display: none !important;
+      }
+      .profile-info {
+        display: none !important;
+      }
+      .greeting-text {
+        font-size: 16px !important;
+      }
+      .hamburger-dashboard {
+        display: inline-block !important;
+      }
     }
   `;
   document.head.appendChild(style);
