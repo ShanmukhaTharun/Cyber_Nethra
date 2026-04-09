@@ -103,7 +103,7 @@ const NotificationBell = () => {
 
       {/* The Dropdown Menu */}
       {isOpen && (
-        <div style={styles.dropdown}>
+        <div className="notif-dropdown" style={styles.dropdown}>
           <div style={styles.dropHeader}>
             <h4 style={{margin: 0, fontSize: '15px'}}>Notifications</h4>
             <span style={{fontSize: '12px', color: '#666'}}>{unreadCount} unread</span>
@@ -137,6 +137,17 @@ const NotificationBell = () => {
           </div>
         </div>
       )}
+      
+      {/* Inject Media Queries for Dropdown */}
+      <style>{`
+        @media (max-width: 400px) {
+          .notif-dropdown {
+            width: 300px !important;
+            right: -60px !important;
+            max-width: 95vw !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
