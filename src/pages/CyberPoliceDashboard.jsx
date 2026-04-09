@@ -73,6 +73,7 @@ const CyberPoliceDashboard = () => {
             <div className="content-area" style={styles.contentArea}>
                 <DashboardNavbar
                     userName={user.fullName || 'Officer'}
+                    userRole={user.role}
                     onProfileClick={() => setActiveTab('profile')}
                     onMenuClick={() => setSidebarOpen(true)}
                 />

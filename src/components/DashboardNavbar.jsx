@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NotificationBell from './NotificationBell';
 
-const DashboardNavbar = ({ userName, onProfileClick, onMenuClick }) => {
+const DashboardNavbar = ({ userName, userRole, onProfileClick, onMenuClick }) => {
   const [greeting, setGreeting] = useState('');
 
   // Set dynamic greeting based on time of day
@@ -53,7 +53,7 @@ const DashboardNavbar = ({ userName, onProfileClick, onMenuClick }) => {
           </div>
           <div style={styles.profileInfo}>
             <span style={styles.userName}>{userName || 'User'}</span>
-            <span style={styles.userRole}>Verified Citizen</span>
+            <span style={styles.userRole}>{userRole || 'Verified Citizen'}</span>
           </div>
           <span style={styles.dropdownIcon}>▼</span>
         </div>

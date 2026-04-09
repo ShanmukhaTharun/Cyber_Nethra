@@ -63,6 +63,7 @@ const ForensicDashboard = () => {
             <div className="content-area" style={styles.contentArea}>
                 <DashboardNavbar
                     userName={user.fullName || 'Analyst'}
+                    userRole={user.role}
                     onProfileClick={() => setActiveTab('profile')}
                     onMenuClick={() => setSidebarOpen(true)}
                 />
